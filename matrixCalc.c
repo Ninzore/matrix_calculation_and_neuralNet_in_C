@@ -42,7 +42,7 @@ matrix _createRandMatrix(int row, int col, int start, int end){
         }
         else{
             for (int i; i<row*col; i++){
-                arr[i] = (rand() / (end-start)) + start;
+                arr[i] = ((start + end * rand()) / ((double) RAND_MAX ));
             }
         }
         matrix mat = createMatrix(row, col, arr);
