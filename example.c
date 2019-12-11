@@ -17,6 +17,12 @@ int main(){
   printMartix(m);
   printMartix(n);
   
+  //initialize a random matrix k with given row, col, and range
+  //REMEMBER to use srand BEFORE using!!!
+  srand((unsigned) time(0));
+  matrix k = createRandMatrix(3,3,0,1);
+  printMartix(k);
+  
   //do dot product, handling the result with a matrix structure
   matrix c = dot(m, n);
   printMartix(c);
