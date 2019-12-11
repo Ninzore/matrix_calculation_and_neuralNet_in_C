@@ -1,6 +1,7 @@
 #include "matrixCalc.h"
 
 #define SIZE 28
+#define DEFARG(name, defval) ((#name[0]) ? (name + 0 ) : defval)
 
 //print the whole matrix
 void printMartix(matrix matrix){
@@ -25,6 +26,35 @@ matrix createMatrix(int row, int col, double init_val[]){
     }
     return mat;
 }
+
+//generate a random matrix with shape row*col
+//default output 1*1 matrix with vals within 0~1
+//REMEMBER to call srand((unsigned) time(0)) before using
+matrix _createRandMatrix(int row, int col, int start, int end){
+    printf("%d %d\n", row, col);
+    double arr[row*col];
+    if (start < end){
+        if (start == 0 && end == 1){
+            for (int i=0; i<row*col; i++){
+                arr[i] = (rand()/(double) RAND_MAX) * 0.99999 + 0.000001;
+            }
+            
+        }
+        else{
+            for (int i; i<row*col; i++){
+                arr[i] = (rand() / (end-start)) + start;
+            }
+        }
+        matrix mat = createMatrix(row, col, arr);
+        return mat;
+    }
+    else{
+        printf("error, start >= end\n");
+        matrix mat = createMatrix(1, 1, arr);
+        return mat;
+    }
+}
+#define createRandMatrix(row, col, start, end) _createRandMatrix(DEFARG(row, 1), DEFARG(col, 1), DEFARG(start, 0), DEFARG(end, 1))
 
 //copy the matrix to a memery location buffer, 
 //with size = matrix.row * matrix.col
