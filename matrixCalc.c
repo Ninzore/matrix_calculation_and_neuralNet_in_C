@@ -1,25 +1,9 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <float.h>
+#include "matrixCalc.h"
 
 #define SIZE 28
 
-typedef struct initMat{
-//initialise a matrix type struct  
-    int col;
-    int row;
-    double val[SIZE][SIZE];
-}matrix;
-
-typedef struct initArr{
-//initialise a matrix type struct  
-    int size;
-    double val[SIZE*SIZE];
-}array;
-
+//print the whole matrix
 void printMartix(matrix matrix){
-//print matrix
     for (int i=0; i<matrix.row; i++){
         for (int j=0; j<matrix.col; j++){
             printf("%-8.2f", matrix.val[i][j]);
@@ -29,8 +13,8 @@ void printMartix(matrix matrix){
     printf("\n");
 }
 
-matrix createMatrix(int row, int col, double init_val[]){
 //use the row, col and an array to create a matrix type
+matrix createMatrix(int row, int col, double init_val[]){
     matrix mat;
     mat.row = row;
     mat.col = col;
@@ -42,10 +26,10 @@ matrix createMatrix(int row, int col, double init_val[]){
     return mat;
 }
 
-double *toArray(matrix matrix){
 //copy the matrix to a memery location buffer, 
 //with size = matrix.row * matrix.col
-//remember to free the memery after using
+//remember to free after using
+double *toArray(matrix matrix){
     double *rt_array = malloc(matrix.row * matrix.col);
     double array[matrix.row * matrix.col];
     // int size = matrix.row * matrix.col;
@@ -58,8 +42,8 @@ double *toArray(matrix matrix){
     return rt_array;
 }
 
-matrix transform(matrix mat_a){
 //matrix transformation
+matrix transform(matrix mat_a){
     double arr[] = {0};
     matrix mat_b = createMatrix(mat_a.row, mat_b.col, arr);
     for (int i=0; i<mat_a.row; i++){
@@ -133,26 +117,4 @@ matrix dot(matrix mat_a, matrix mat_b){
         }   
     }
     return mat_c;
-}
-
-
-int main(){
-    double arr[] = {4,7,12,413};
-    matrix m = createMatrix(2,2, arr);
-    matrix n = createMatrix(2,2, arr);
-    printMartix(m);
-    printMartix(n);
-    matrix c = dot(m, n);
-    printMartix(c);
-    matrix d = plus(m, n);
-    printMartix(d);
-    d = transform(d);
-    printMartix(d);
-    d = scalar(d, 2);
-    printMartix(d);
-    matrix e = minus(m,n);
-    printMartix(e);
-    double *buffer = toArray(m);
-    printf("%f", buffer[0]);
-    free(buffer);
 }
