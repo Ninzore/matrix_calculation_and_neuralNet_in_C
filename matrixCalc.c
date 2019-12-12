@@ -3,8 +3,37 @@
 #define SIZE 28
 #define DEFARG(name, defval) ((#name[0]) ? (name + 0 ) : defval)
 
-//print the whole matrix
+/*
+matrix type, with max size = SIZE,
+which has been defined above
+
+    row: int, total number of rows of the matrix
+    col: int, total number of col of the matrix
+    val: the values within the matrix,
+         use matrix.val[][] to access this matrix
+*/
+typedef struct initMat{
+//initialise a matrix type struct  
+    int col;
+    int row;
+    double val[SIZE][SIZE];
+}matrix;
+
+/*
+use the row, col and an array to create a matrix type
+
+Args:  
+    row: int, total number of rows of the matrix
+    col: int, total number of col of the matrix
+    init_val: double list, the list transfer to matrix
+                           can be 0;
+
+Output: matrix, if the size of matrix is larger than the
+                init_val, matrix size will not be changed
+                rest of the matrix will be all 0;
+*/
 void printMartix(matrix matrix){
+//print matrix
     for (int i=0; i<matrix.row; i++){
         for (int j=0; j<matrix.col; j++){
             printf("%-8.2f", matrix.val[i][j]);
@@ -14,7 +43,19 @@ void printMartix(matrix matrix){
     printf("\n");
 }
 
-//use the row, col and an array to create a matrix type
+/*
+use the row, col and an array to create a matrix type
+
+Args:  
+    row: int, total number of rows of the matrix
+    col: int, total number of col of the matrix
+    init_val: double list, the list transfer to matrix
+                           can be 0;
+
+Output: matrix, if the size of matrix is larger than the
+                init_val, matrix size will not be changed
+                rest of the matrix will be all 0;
+*/
 matrix createMatrix(int row, int col, double init_val[]){
     matrix mat;
     mat.row = row;
@@ -27,23 +68,25 @@ matrix createMatrix(int row, int col, double init_val[]){
     return mat;
 }
 
-//generate a random matrix with shape row*col
-//default output 1*1 matrix with vals within 0~1
-//REMEMBER to call srand((unsigned) time(0)) before using
+/*
+generate a random matrix with shape row*col
+REMEMBER to call srand((unsigned) time(0)) only ONCE before using
+default output 1*1 matrix with vals within 0~1
+change the macro below to change the default behavior
+
+Args:
+    row: int, total number of rows of the matrix
+    col: int, total number of col of the matrix
+    start: int, the minium of values
+    end: int, the maxium of values
+
+Output: matrix type
+*/
 matrix _createRandMatrix(int row, int col, int start, int end){
-    printf("%d %d\n", row, col);
     double arr[row*col];
     if (start < end){
-        if (start == 0 && end == 1){
-            for (int i=0; i<row*col; i++){
-                arr[i] = (rand()/(double) RAND_MAX) * 0.99999 + 0.000001;
-            }
-            
-        }
-        else{
-            for (int i; i<row*col; i++){
-                arr[i] = ((start + end * rand()) / ((double) RAND_MAX ));
-            }
+        for (int i; i<row*col; i++){
+            arr[i] = ((start + end * rand()) / ((double) RAND_MAX ));
         }
         matrix mat = createMatrix(row, col, arr);
         return mat;
@@ -56,23 +99,75 @@ matrix _createRandMatrix(int row, int col, int start, int end){
 }
 #define createRandMatrix(row, col, start, end) _createRandMatrix(DEFARG(row, 1), DEFARG(col, 1), DEFARG(start, 0), DEFARG(end, 1))
 
-//copy the matrix to a memery location buffer, 
-//with size = matrix.row * matrix.col
-//remember to free after using
+/*
+use Box-Muller method to generate number in Gaussian (normal) distrubution
+
+Args:
+    centre: int, set the centre
+    std_deviation: float, the standard deviation of the distrubution
+    
+Output: double the random number generated
+*/
+double _gaussianDistribution(int centre, float std_deviation){
+    double PI = 3.1415926535897932;
+    double z = 0;
+    double a = (rand()/((double) RAND_MAX + 1));
+    double b = rand()/((double) RAND_MAX + 1);
+    double radius = sqrt(-2 * log(a));
+    double theta = PI * 2 * b;
+    // z = radius * cos(theta);
+    z = (radius * sin(theta) + centre) * std_deviation;
+    return z;
+}
+#define gaussianDistribution(centre, std_deviation) _gaussianDistribution(DEFARG(centre, 0), DEFARG(std_deviation, 1))
+
+/*
+use Box-Muller method to generate a matrix with values follow Gaussian (normal) distrubution
+
+Args:
+    row: int, total number of rows of the matrix
+    col: int, total number of col of the matrix
+    centre: int, set the centre of the distrubution
+    std_deviation: float, the standard deviation of the distrubution
+             
+Output: mattrix type, with values follows normal distrubution
+*/
+matrix _createNormalMatrix(int row, int col, int centre, float std_deviation){
+    double arr[row*col];
+    for (int i=0; i<row*col; i++){
+        arr[i] = gaussianDistribution(centre, std_deviation);
+    }
+    matrix mat = createMatrix(row, col, arr);
+    return mat;
+}
+#define createNormalMatrix(row, col, centre, std_deviation) \
+_createNormalMatrix(DEFARG(row, 1), DEFARG(col, 1), DEFARG(centre, 0), DEFARG(std_deviation, 1))
+
+/*
+copy the matrix to an array stored in buffer memery location, 
+array size = matrix.row * matrix.col
+REMEMBER to free the memery after using
+Args:
+    matrix: matrix type
+Output:
+    array: double pointer, use array[] to access individual val 
+*/
 double *toArray(matrix matrix){
-    double *rt_array = malloc(matrix.row * matrix.col);
-    double array[matrix.row * matrix.col];
+    double *array = malloc(matrix.row * matrix.col);
     // int size = matrix.row * matrix.col;
     for (int i=0; i<matrix.row; i++){
         for (int j=0; j<matrix.col; j++){
             array[i * matrix.col + j] = matrix.val[i][j];
         }
     }
-    memcpy(rt_array, array, matrix.row * matrix.col);
-    return rt_array;
+    return array;
 }
 
-//matrix transformation
+/*
+matrix transformation
+Args:
+    matrix: matrix, a matrix
+*/
 matrix transform(matrix mat_a){
     double arr[] = {0};
     matrix mat_b = createMatrix(mat_a.row, mat_b.col, arr);
@@ -84,6 +179,12 @@ matrix transform(matrix mat_a){
     return mat_b;
 }
 
+/*
+matrix addition
+Args:
+    matrix_a: matrix type, a matrix
+    matrix_b: matrix type, a matrix
+*/
 matrix plus(matrix mat_a, matrix mat_b){
     double arr_c[] = {0};
     matrix mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
@@ -101,6 +202,12 @@ matrix plus(matrix mat_a, matrix mat_b){
     return mat_c;
 }
 
+/*
+matrix subtraction
+Args:
+    matrix_a: matrix type, a matrix
+    matrix_b: matrix type, a matrix
+*/
 matrix minus(matrix mat_a, matrix mat_b){
     double arr_c[] = {0};
     matrix mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
@@ -118,18 +225,34 @@ matrix minus(matrix mat_a, matrix mat_b){
     return mat_c;
 }
 
-matrix scalar(matrix mat_a, double num){
+/*
+matrix multiply with a scalar value
+Args:
+    matrix_a: matrix type, a matrix
+    num: double, the number used to multiply
+Output: 
+    matrix type, the result matrix
+*/
+matrix scalar(matrix matrix_a, double num){
 //multiply with a scalar
     double arr[] = {0};
-    matrix mat_b = createMatrix(mat_a.row, mat_b.col, arr);
-    for (int i=0; i<mat_a.row; i++){
+    matrix mat_b = createMatrix(matrix_a.row, mat_b.col, arr);
+    for (int i=0; i<matrix_a.row; i++){
         for (int j=0; j<mat_b.col; j++){
-            mat_b.val[i][j] = mat_a.val[i][j] * num;
+            mat_b.val[i][j] = matrix_a.val[i][j] * num;
         }
     }   
     return mat_b;
 }
 
+/*
+matrix multiplication by difination
+Args:
+    mat_a: matrix type, a matrix
+    mat_b: matrix type, a matrix
+Output: 
+    matrix type, the result matrix
+*/
 matrix dot(matrix mat_a, matrix mat_b){
     double arr_c[] = {0};
     matrix mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
