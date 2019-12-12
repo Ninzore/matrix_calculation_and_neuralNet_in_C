@@ -48,4 +48,12 @@ int main(){
   printf("%f", buffer[0]);
   //ALWAYS REMEMBER to free
   free(buffer);
+  
+  //get 1 random number obey the gaussian distribution
+  //default output is centre at 0, standard deviation 1
+  printf("%f\n", gaussianDistribution(0,1));
+  //get a matrix of random number obey the gaussian distribution, 
+  //default output is 1*1 matrix with value centre at 0, standard deviation 1
+  matrix normal_mat = createNormalMatrix(5, 5, 0, 1);
+  printMartix(normal_mat);
 }
