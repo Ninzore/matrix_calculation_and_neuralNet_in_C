@@ -153,8 +153,8 @@ Output:
     array: double pointer, use array[] to access individual val 
 */
 double *toArray(matrix matrix){
-    double *array = malloc(matrix.row * matrix.col);
-    // int size = matrix.row * matrix.col;
+    //allocate the memery for the array, x8 for double, change to x4 for int or float
+    double *array = malloc(matrix.row * matrix.col * 8));
     for (int i=0; i<matrix.row; i++){
         for (int j=0; j<matrix.col; j++){
             array[i * matrix.col + j] = matrix.val[i][j];
