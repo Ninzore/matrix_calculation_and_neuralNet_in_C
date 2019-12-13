@@ -43,6 +43,8 @@ matrix minus(matrix mat_a, matrix mat_b);
 
 matrix scalar(matrix mat_a, double num);
 
+double inner(matrix mat_a, matrix mat_b);
+
 matrix dot(matrix mat_a, matrix mat_b);
 
 #endif
