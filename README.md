@@ -12,4 +12,6 @@ do matrix calculations with plain C
 6. matrix addition
 7. matrix substraction
 8. multiply with a scalar
-9. dot product
+9. inner product
+10. dot product
+11. to do: cross product
