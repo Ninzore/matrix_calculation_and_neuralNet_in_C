@@ -246,7 +246,34 @@ matrix scalar(matrix matrix_a, double num){
 }
 
 /*
-matrix multiplication by difination
+get the inner product of 2 1-d matrix(array)
+Args:
+    mat_a: matrix type, a 1-d matrix(array)
+    mat_b: matrix type, a 1-d matrix(array)
+Output: 
+    double, the inner product result
+*/
+double inner(matrix mat_a, matrix mat_b){
+    double product;
+    if (mat_a.row == 1 && mat_b.row == 1){
+        if (mat_a.col == mat_b.col){
+            for(int i=0; i<mat_a.col; i++){
+                product += mat_a.val[0][i] * mat_b.val[0][i];
+            }
+        }
+        else{
+            printf("error, matrix A and matrix B have different size");
+            exit(-1);
+        }
+    }
+    return product;
+}
+
+/*
+if 2 matrixs are 1-d matrix(array), return the inner product as a 0-d matrix, 
+inner() function is better for this as it returns a double
+
+if they are 2-d matrix, then do matrix multiplication
 Args:
     mat_a: matrix type, a matrix
     mat_b: matrix type, a matrix
@@ -255,19 +282,32 @@ Output:
 */
 matrix dot(matrix mat_a, matrix mat_b){
     double arr_c[] = {0};
-    matrix mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
-    if (mat_a.col != mat_b.row){
-        printf("\nerror, matrix A's row isn't equal to matrix B's col");
-        return mat_c;
+    matrix mat_c;
+    if (mat_a.row == 1 && mat_b.row == 1){
+        if (mat_a.col == mat_b.col){
+            mat_c = createMatrix(1, 1, arr_c);
+            for(int i=0; i<mat_a.col; i++){
+                mat_c.val[0][0] += mat_a.val[0][i] * mat_b.val[0][i];
+            }
+        }
+        else{
+            printf("error, matrix A's col isn't equal to matrix B's col\n");
+            exit(-1);
+        }
     }
-    else{
+    else if (mat_a.col == mat_b.row){
+        mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
         for (int i=0; i<mat_a.row; i++){
             for (int j=0; j<mat_b.col; j++){
                 for (int k=0; k<mat_a.col; k++){
                     mat_c.val[i][j] = mat_c.val[i][j] + mat_a.val[i][k] * mat_b.val[k][j];
                 }
             }
-        }   
+        }
+    }
+    else{
+        printf("\nerror, matrix A's row isn't equal to matrix B's col");
+        exit(-1);
     }
     return mat_c;
 }
