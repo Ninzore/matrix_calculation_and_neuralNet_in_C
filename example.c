@@ -17,6 +17,10 @@ int main(){
   printMartix(m);
   printMartix(n);
   
+  //create an identity matrix
+  matrix i = createIdentityMatrix(5);
+  printMartix(i);
+  
   //initialize a random matrix k with given row, col, and range
   //REMEMBER to use srand BEFORE using!!!
   srand((unsigned) time(0));
@@ -66,7 +70,17 @@ int main(){
   d = transform(d);
   printMartix(d);
   
+  //transfer all the members in the matrix to exponential form
+  matrix expMatrix = expMat(i);
+  printMatrix(expMatrix);
+  
   //multiply with a float
   d = scalar(d, 2);
   printMartix(d);
+  
+  //calculate the sum of members in a matrix
+  double sum = sum(m);
+  
+  //calculate the sum exponential of members in a matrix
+  double expSum = expSum(m);
 }
