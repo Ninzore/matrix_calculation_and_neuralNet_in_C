@@ -3,7 +3,7 @@ do matrix calculations with plain C, and even more
 
 ## Please see the example.c for instuctions
 
-##  Now support
+##  Matrix calculation Now support
 1. create a matrix, can be initialised by a 1D array
 2. create an identity matrix
 3. create a random matrix, can set the random range
@@ -21,3 +21,8 @@ do matrix calculations with plain C, and even more
 15. to do: cross product
 16. sum of each member in a matrix
 17. sum of the exponential of each member in a matrix
+
+## some activation functions
+1. sigmoid
+2. ReLu
+3. softmax
