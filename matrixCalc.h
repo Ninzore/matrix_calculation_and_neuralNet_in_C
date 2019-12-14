@@ -20,6 +20,8 @@ void printMartix(matrix matrix);
 
 matrix createMatrix(int row, int col, double init_val[]);
 
+matrix createIdentityMatrix(int n);
+
 double _gaussianDistribution(int centre, float std_deviation);
 
 #define gaussianDistribution(centre, std_deviation) \
@@ -36,6 +38,12 @@ _createRandMatrix(DEFARG(row, 1), DEFARG(col, 1), DEFARG(start, 0), DEFARG(end, 
 double *toArray(matrix matrix);
 
 matrix transform(matrix mat_a);
+
+matrix expMat(matrix mat_in);
+
+double sum(matrix mat_in);
+
+double expSum(matrix mat_in);
 
 matrix plus(matrix mat_a, matrix mat_b);
 
