@@ -1,12 +1,10 @@
 #include "matrixCalc.h"
 
-#define SIZE 28
 #define DEFARG(name, defval) ((#name[0]) ? (name + 0 ) : defval)
 
 /*
-matrix type, with max size = SIZE,
-which has been defined above
-
+matrix type, 
+Attrs:
     row: int, total number of rows of the matrix
     col: int, total number of col of the matrix
     val: the values within the matrix,
@@ -16,7 +14,7 @@ which has been defined above
 // //initialise a matrix type struct  
 //     int col;
 //     int row;
-//     double val[SIZE][SIZE];
+//     double **val;
 // }matrix;
 
 
