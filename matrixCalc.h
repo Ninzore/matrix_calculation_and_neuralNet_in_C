@@ -6,19 +6,20 @@
 #include <string.h>
 #include <float.h>
 
-#define SIZE 28
 #define DEFARG(name, defval) ((#name[0]) ? (name + 0 ) : defval)
 
 typedef struct initMat{
 //initialise a matrix type struct  
     int col;
     int row;
-    double val[SIZE][SIZE];
+    double **val;
 }matrix;
 
 void printMartix(matrix matrix);
 
 matrix createMatrix(int row, int col, double init_val[]);
+
+matrix createConstMatrix(int row, int col);
 
 matrix createIdentityMatrix(int n);
 
@@ -45,9 +46,13 @@ double sum(matrix mat_in);
 
 double expSum(matrix mat_in);
 
-matrix plus(matrix mat_a, matrix mat_b);
+matrix plus(matrix mat_a, double num);
 
-matrix minus(matrix mat_a, matrix mat_b);
+matrix minus(matrix mat_a, double num);
+
+matrix plusMat(matrix mat_a, matrix mat_b);
+
+matrix minusMat(matrix mat_a, matrix mat_b);
 
 matrix scalar(matrix mat_a, double num);
 
