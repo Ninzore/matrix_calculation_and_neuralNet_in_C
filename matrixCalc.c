@@ -12,12 +12,13 @@ which has been defined above
     val: the values within the matrix,
          use matrix.val[][] to access this matrix
 */
-typedef struct initMat{
-//initialise a matrix type struct  
-    int col;
-    int row;
-    double val[SIZE][SIZE];
-}matrix;
+// typedef struct initMat{
+// //initialise a matrix type struct  
+//     int col;
+//     int row;
+//     double val[SIZE][SIZE];
+// }matrix;
+
 
 /*
 use the row, col and an array to create a matrix type
@@ -60,11 +61,38 @@ matrix createMatrix(int row, int col, double init_val[]){
     matrix mat;
     mat.row = row;
     mat.col = col;
-    for (int i=0; i<row; i++){
-        for (int j=0; j<col; j++){
-            mat.val[i][j] = init_val[i * col + j];
+    mat.val = (double**)malloc(sizeof(double*) * mat.row);
+    for (int i=0; i<mat.row; i++){
+        mat.val[i] = (double*)malloc(sizeof(double) * mat.col);
+        for (int j=0; j<mat.row; j++){
+            mat.val[i][j] = init_val[i * mat.row + j];
         }
     }
+    return mat;
+}
+
+
+/*
+use the row, col and an array to create a matrix
+
+Args:  
+    row: int, total number of rows of the matrix
+    col: int, total number of col of the matrix
+
+Return: matrix, with all members are 0
+*/
+matrix createConstMatrix(int row, int col, int num){
+    matrix mat;
+    mat.row = row;
+    mat.col = col;
+    mat.val = (double**)malloc(sizeof(double*) * mat.row);
+    for (int i=0; i<mat.row; i++){
+        mat.val[i] = (double*)malloc(sizeof(double) * mat.col);
+        for (int j=0; j<mat.col; j++){
+            mat.val[i][j] = num;
+        }
+    }
+
     return mat;
 }
 
@@ -197,7 +225,6 @@ matrix transform(matrix mat_a){
     return mat_b;
 }
 
-
 /*
 transfer all the members in the matrix to exponential form
 Args:
@@ -217,12 +244,43 @@ matrix expMat(matrix mat_in){
 }
 
 /*
+add a number to all members in the matrix
+Args:
+    mat_a: matrix type, a matrix
+*/
+matrix plus(matrix mat_a, double num){
+    matrix mat_c = createConstMatrix(mat_a.row, mat_a.col, 0);
+    for (int i=0; i<mat_a.row; i++){
+        for (int j=0; j<mat_a.col; j++){
+            mat_c.val[i][j] = mat_a.val[i][j] + num;
+        }
+    }       
+    return mat_c;
+}
+
+
+/*
+minus a number from all members in the matrix
+Args:
+    mat_a: matrix type, a matrix
+*/
+matrix minus(matrix mat_a, double num){
+    matrix mat_c = createConstMatrix(mat_a.row, mat_a.col, 0);
+    for (int i=0; i<mat_a.row; i++){
+        for (int j=0; j<mat_a.col; j++){
+            mat_c.val[i][j] = mat_a.val[i][j] - num;
+        }
+    }       
+    return mat_c;
+}
+
+/*
 matrix addition
 Args:
     matrix_a: matrix type, a matrix
     matrix_b: matrix type, a matrix
 */
-matrix plus(matrix mat_a, matrix mat_b){
+matrix plusMat(matrix mat_a, matrix mat_b){
     double arr_c[] = {0};
     matrix mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
     if ((mat_a.row != mat_b.row) || (mat_a.col != mat_b.col)){
@@ -245,7 +303,7 @@ Args:
     matrix_a: matrix type, a matrix
     matrix_b: matrix type, a matrix
 */
-matrix minus(matrix mat_a, matrix mat_b){
+matrix minusMat(matrix mat_a, matrix mat_b){
     double arr_c[] = {0};
     matrix mat_c = createMatrix(mat_a.row, mat_b.col, arr_c);
     if ((mat_a.row != mat_b.row) || (mat_a.col != mat_b.col)){
@@ -263,7 +321,7 @@ matrix minus(matrix mat_a, matrix mat_b){
 }
 
 /*
-for calculating the sum of members in a matrix
+calculate the sum of members in a matrix
 Args:
     matrix_a: matrix type, a matrix
 
@@ -280,7 +338,7 @@ double sum(matrix mat_in){
 }
 
 /*
-for calculating the sum exponential of members in a matrix
+calculate the sum exponential of members in a matrix
 Args:
     matrix_a: matrix type, a matrix
 
