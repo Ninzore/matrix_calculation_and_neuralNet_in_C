@@ -5,22 +5,25 @@ do matrix calculations with plain C, and even more
 
 ##  Matrix calculation Now support
 1. create a matrix, can be initialised by a 1D array
-2. create an identity matrix
-3. create a random matrix, can set the random range
-4. create a random matrix with values follow Gaussian distribution
-5. convert matrix to 1D array
-6. print matrix
-7. matrix transformation
-8. transfer all the members in a matrix to exponential form
-9. matrix addition
-10. matrix substraction
-11. multiply with a scalar
-12. inner product
-13. dot product
-14. to do: inverse matrix
-15. to do: cross product
-16. sum of each member in a matrix
-17. sum of the exponential of each member in a matrix
+2. create a matrix, with all the members equal to one number
+3. create an identity matrix
+4. create a random matrix, can set the random range
+5. create a random matrix with values follow Gaussian distribution
+6. convert matrix to 1D array
+7. print matrix
+8. matrix transformation
+9. transfer all the members in a matrix to exponential form
+10. add a number to all members in a matrix
+11. minus a number from all members in a matrix
+12. matrix addition
+13. matrix substraction
+14. multiply with a scalar
+15. inner product
+16. dot product
+17. to do: inverse matrix
+18. to do: cross product
+19. sum of each member in a matrix
+20. sum of the exponential of each member in a matrix
 
 ## some activation functions
 1. sigmoid
