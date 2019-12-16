@@ -19,7 +19,7 @@ void printMartix(matrix matrix);
 
 matrix createMatrix(int row, int col, double init_val[]);
 
-matrix createConstMatrix(int row, int col);
+matrix createConstMatrix(int row, int col, int num);
 
 matrix createIdentityMatrix(int n);
 
@@ -50,11 +50,15 @@ matrix plus(matrix mat_a, double num);
 
 matrix minus(matrix mat_a, double num);
 
+matrix numMinus(double num, matrix mat_a);
+
 matrix plusMat(matrix mat_a, matrix mat_b);
 
 matrix minusMat(matrix mat_a, matrix mat_b);
 
 matrix scalar(matrix mat_a, double num);
+
+matrix multiply(matrix matrix_a, matrix matrix_b);
 
 double inner(matrix mat_a, matrix mat_b);
 
