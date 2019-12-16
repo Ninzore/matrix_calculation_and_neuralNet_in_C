@@ -1,4 +1,5 @@
 #include "matrixCalc.h"
+#include "activation.h"
 
 #include <stdio.h>
 #include <float.h>
