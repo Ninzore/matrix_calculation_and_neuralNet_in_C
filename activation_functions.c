@@ -4,8 +4,15 @@
 #include <float.h>
 #include <math.h>
 
-inline double sigmoid(double x){
-    return 1/(1+exp(-x));
+matrix sigmoid(matrix mat_in){
+    double result[mat_in.row * mat_in.col];
+    for (int i=0; i<mat_in.row; i++){
+        for (int j=0; j<mat_in.col; j++){
+            result[i * mat_in.row * j] = 1 / (1 + exp(-mat_in.val[i][j]));
+        }
+    }
+    matrix result_mat = createMatrix(mat_in.row, mat_in.col, result);
+    return result_mat;
 }
 
 matrix relu(matrix mat_in){
