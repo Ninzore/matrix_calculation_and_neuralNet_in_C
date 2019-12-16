@@ -1,4 +1,5 @@
 #include "matrixCalc.h"
+#include "activation.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -67,8 +68,12 @@ int main(){
   matrix q = plus(m, 2);
   printMartix(q);
   
-  //do matrix addition
+  //subtract a matrix by a number
   matrix w = minus(m, 3);
+  printMartix(w);
+  
+  //subtraction in another direction
+  matrix o = numMinus(1, i2h_active);
   printMartix(w);
   
   //do matrix addition
@@ -77,6 +82,10 @@ int main(){
   
   //do matrix minus
   matrix r = minusMat(m,n);
+  printMartix(r);
+  
+  //do array(matrix type) multiplication
+  matrix p = multiply(hid_err, in_hid);
   printMartix(r);
   
   //matrix transform
@@ -96,4 +105,17 @@ int main(){
   
   //calculate the sum exponential of members in a matrix
   double expSum = expSum(m);
+  
+  matrix x = createNormalMatrix(5, 5, 0, 1);
+  printMatrix(x);
+  matrix y;
+  //sigmoid
+  y = sigmoid(x);
+  printMatrix(y);
+  //relu
+  y = relu(x);
+  printMatrix(y);
+  //softmax
+  y = softmax(x);
+  printMatrix(y);
 }
