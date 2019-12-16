@@ -18,12 +18,13 @@ do matrix calculations with plain C, and even more
 12. matrix addition
 13. matrix substraction
 14. multiply with a scalar
-15. inner product
-16. dot product
-17. to do: inverse matrix
-18. to do: cross product
-19. sum of each member in a matrix
-20. sum of the exponential of each member in a matrix
+15. array multiplication (star multiply * in numpy)
+16. inner product
+17. dot product
+18. to do: inverse matrix
+19. to do: cross product
+20. sum of each member in a matrix
+21. sum of the exponential of each member in a matrix
 
 ## some activation functions
 1. sigmoid
