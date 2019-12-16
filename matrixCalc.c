@@ -273,6 +273,22 @@ matrix minus(matrix mat_a, double num){
 }
 
 /*
+a number subtract by a matrix
+Args:
+    mat_a: matrix type, a matrix
+*/
+matrix numMinus(double num, matrix mat_in){
+    double arr[mat_in.row * mat_in.col];
+    for (int i=0; i<mat_in.row; i++){
+        for (int j=0; j<mat_in.col; j++){
+            arr[i * mat_in.col + j] = num - mat_in.val[i][j];
+        }
+    }
+    matrix mat_c = createMatrix(mat_in.row, mat_in.col, arr);
+    return mat_c;
+}
+
+/*
 matrix addition
 Args:
     matrix_a: matrix type, a matrix
@@ -370,6 +386,26 @@ matrix scalar(matrix matrix_a, double num){
         }
     }   
     return mat_b;
+}
+
+/*
+multiply two arrays(matrices)
+Args:
+    matrix_a: matrix type, a matrix
+    matrix_a: matrix type, a matrix
+Return: 
+    matrix type, the result matrix
+*/
+matrix multiply(matrix matrix_a, matrix matrix_b){
+//multiply with a scalar
+    double result[matrix_a.row * matrix_a.col];
+    for (int i=0; i<matrix_a.row; i++){
+        for (int j=0; j<matrix_a.col; j++){
+            result[i * matrix_a.row + j] = matrix_a.val[i][j] * matrix_b.val[i][j];
+        }
+    }
+    matrix result_mat = createMatrix(matrix_a.row, matrix_a.col, result);
+    return result_mat;
 }
 
 /*
